@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Input Form</title>
+    <!-- Add your CSS styling here -->
+    <style>
+        /* Your CSS styles go here */
+    </style>
+</head>
+<body>
+    <h1>Enter URL and Submit</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="url" placeholder="Enter URL" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
