@@ -1,0 +1,49 @@
+{% extends "index.html" %} {% block title %}ZAP Scan - NetBility Scanner{%endblock %} {% block content %}
+<h1>ZAP Vulnerability Scanner</h1>
+<form id="scan-form">
+  {% csrf_token %}
+  <label for="url">Enter URL:</label>
+  <input type="text" id="url" name="url" />
+  <input type="submit" value="Scan" />
+</form>
+<div id="progress" style="display: none">Scanning in progress...</div>
+
+<div
+  id="results"
+  style="display: none; overflow-y: auto; max-height: 70vh; width: 80%"
+>
+  <!-- Add 'overflow-y: auto;' and 'max-height: 70vh;' to make the section scrollable -->
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Left column for "Spider Results" and "Total number of spider results" -->
+      <div style="text-align: left; padding-left: 10px">
+        <h2>Spider Results</h2>
+        <p>Total number of spider results: <span id="spider-count"></span></p>
+      </div>
+    </div>
+    <div class="col-md-6 text-right">
+      <!-- Right column for "Results Per Page" -->
+      <label for="spider-per-page">Results Per Page:</label>
+      <select id="spider-per-page">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <!-- Add more options as needed -->
+      </select>
+      <button id="prev-page" class="btn btn-primary">Previous Page</button>
+      <button id="next-page" class="btn btn-primary">Next Page</button>
+    </div>
+  </div>
+  <ul id="spider-results" class="list-group"></ul>
+  <div style="text-align: left; padding-left: 10px">
+    <h2>Alerts</h2>
+    <p>Total number of alerts: <span id="alert-count"></span></p>
+  </div>
+
+  <div id="alert-list"></div>
+</div>
+
+<div id="error" style="display: none; color: red"></div>
+{% load static %}
+<script src="{% static 'js/scan.js' %}"></script>
+{% endblock %}

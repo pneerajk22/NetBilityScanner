@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}NetBility Scanner{% endblock %}</title>
+    <!-- Include Bootstrap CSS from a CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Include custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+    <!-- Include jQuery from a CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Popper.js from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+
+    <!-- Include Bootstrap JS from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <style>
+      /* Style for the full-screen container */
+      #welcome-container,
+      #total-scans-section,
+      #footer-section {
+        min-height: 100vh; /* Set a minimum height to occupy the entire viewport */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        opacity: 0; /* Initially hidden */
+        transform: translateY(20px); /* Initially translated */
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        background: none; /* Remove background color */
+        box-shadow: none; /* Remove box shadow */
+      }
+
+      /* Add animation class when in the viewport */
+      #total-scans-section.in-viewport,
+      #welcome-container.in-viewport,
+      #footer-section.in-viewport {
+        animation: fade-slide-up 1s ease;
+        opacity: 1; /* Make it visible */
+        transform: translateY(0); /* Reset translation */
+      }
+
+      /* Keyframes for the animation */
+      @keyframes fade-slide-up {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/">NetBility Scanner</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/scan/">WEB</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/port_scan/">PORT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/upload/">FILE</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Full-screen "Welcome to NetBility" section -->
+    <div id="welcome-container">
+      <!-- Content of the child templates goes here -->
+      {% block content %}
+      <h1>Welcome to NetBility Scanner</h1>
+      <p>This is the main page of the scanner application.</p>
+      {% endblock %}
+    </div>
+
+    <!-- Hidden "Total Scans Done By NetBility" section -->
+    <div id="total-scans-section" class="container text-center">
+      <h1>Total Scans Done By NetBility</h1>
+      <p>Zap Scans: <span id="zap_scans">0</span></p>
+      <p>Port Scans: <span id="port_scans">0</span></p>
+      <p>File Scans: <span id="file_scans">0</span></p>
+    </div>
+
+    <!-- Hidden "Footer" section -->
+    <div id="footer-section" class="container text-center">
+      <p>&copy; 2023 NetBility Scanner</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fetch initial data from the server when the page loads
+        fetch("/get_initial_data/")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("zap_scans").textContent = data.zap_scans;
+            document.getElementById("port_scans").textContent = data.port_scans;
+            document.getElementById("file_scans").textContent = data.file_scans;
+          })
+          .catch((error) => {
+            console.error("Error fetching initial data:", error);
+          });
+
+        // Use Intersection Observer to trigger the animation when the sections enter the viewport
+        var options = {
+          rootMargin: "0px",
+          threshold: 0.75, // Trigger at 75% visibility
+        };
+
+        var totalScansSection = document.getElementById("total-scans-section");
+        var welcomeContainer = document.getElementById("welcome-container");
+        var footerSection = document.getElementById("footer-section");
+
+        function handleIntersect(entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.target.id === "total-scans-section") {
+              if (entry.isIntersecting) {
+                totalScansSection.classList.add("in-viewport");
+              } else {
+                totalScansSection.classList.remove("in-viewport");
+              }
+            } else if (entry.target.id === "footer-section") {
+              if (entry.isIntersecting) {
+                footerSection.classList.add("in-viewport");
+              } else {
+                footerSection.classList.remove("in-viewport");
+              }
+            } else {
+              if (entry.isIntersecting) {
+                welcomeContainer.classList.add("in-viewport");
+              } else {
+                welcomeContainer.classList.remove("in-viewport");
+              }
+            }
+          });
+        }
+
+        var observer = new IntersectionObserver(handleIntersect, options);
+
+        observer.observe(totalScansSection);
+        observer.observe(welcomeContainer);
+        observer.observe(footerSection);
+
+        // Establish a WebSocket connection for real-time updates (as shown in your previous code)
+        var socket = new WebSocket(
+          "ws://" + window.location.host + "/ws/dashboard/"
+        );
+
+        socket.onmessage = function (e) {
+          var data = JSON.parse(e.data);
+          document.getElementById("zap_scans").textContent = data.zap_scans;
+          document.getElementById("port_scans").textContent = data.port_scans;
+          document.getElementById("file_scans").textContent = data.file_scans;
+        };
+
+        socket.onclose = function (e) {
+          // Handle WebSocket connection closed.
+        };
+      });
+    </script>
+
+    <!-- Include Bootstrap JS (You can adjust this based on your project's setup) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.1/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

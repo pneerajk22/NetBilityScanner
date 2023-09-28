@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+
+{% block title %}Scan Results - NetBility Scanner{% endblock %}
+
+{% block content %}
+<div style="overflow: auto; max-height: 500px; width:80%"> <!-- Add a max-height property for the scrollable container -->
+    <h1>Scan Results</h1>
+    <h2>File Status: {{ file_status }}</h2>
+
+    <table border="1" style="width: 100%;"> <!-- Set the table width to 80% -->
+        <thead>
+            <tr>
+                <th>Engine</th>
+                <th>Engine Version</th>
+                <th>Result</th>
+                <th>Method</th>
+                <th>Engine Update</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for engine, result in scan_results.items %}
+                {% if result.category != 'undetected' and result.category != 'Unable to process file type' and result.category != 'timeout' and result.category != 'type-unsupported' %}
+                    <tr>
+                        <td >{{ engine }}</td> <!-- Set cell width to 14% for equal distribution -->
+                        <td >{{ result.engine_version }}</td>
+                        <td >{{ result.result }}</td>
+                        <td >{{ result.method }}</td>
+                        <td >{{ result.engine_update }}</td>
+                        <td >{{ result.category }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Total Engines: {{ total_engines }}</p>
+    <p>Safe Engines: {{ safe_count }}</p>
+    <p>Harmful Engines: {{ harmful_count }}</p>
+</div>
+{% endblock %}

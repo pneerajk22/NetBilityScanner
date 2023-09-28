@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}Upload File - NetBility Scanner{% endblock %}
+
+{% block content %}
+<h1>Upload File</h1>
+<form method="post" action="{% url 'upload_file' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file">
+    <input type="submit" value="Upload and Analyze">
+</form>
+<script>
+    document.querySelector(".nav-item.active").classList.remove("active"); // Remove active class from any previous active item
+  document.querySelector(".nav-item:nth-child(4)").classList.add("active"); // Add active class to the second item (WEB)
+</script>
+{% endblock %}

@@ -1,0 +1,304 @@
+/* Apply a dark background and green text */
+body {
+  background-color: #000;
+  color: #00ff00;
+  /* background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
+  backdrop-filter: blur(5px);
+}
+
+#video-background {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  /* Place it behind other content */
+  object-fit: cover;
+  /* Ensure the video covers the entire viewport */
+}
+
+.blur-video {
+  filter: blur(15px);
+  -webkit-filter: blur(15px);
+}
+
+/* Style for the full-screen container */
+#welcome-container,
+#total-scans-section,
+#footer-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    background: none;
+    box-shadow: none;
+}
+
+/* Add animation class when in the viewport */
+#total-scans-section.in-viewport,
+#welcome-container.in-viewport,
+#footer-section.in-viewport {
+    animation: fade-slide-up 1s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Keyframes for the animation */
+@keyframes fade-slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom animation for the navbar toggle button */
+.navbar-toggler-icon {
+    animation: slide-down 0.3s ease;
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+
+/* Style the navbar */
+.navbar {
+  background-color: #00000000 !important;
+
+  padding-left: 7%;
+  padding-right: 7%;
+
+}
+
+.navbar-brand,
+.nav-link {
+  color: #00ff00 !important;
+
+}
+
+.navbar-nav.ml-auto .nav-item {
+  margin-left: 50px;
+  /* Adjust the spacing as needed */
+}
+
+/* CSS to make it responsive */
+@media (max-width: 768px) {
+  .navbar-nav.ml-auto .nav-item {
+    margin-left: 0;
+    /* Reset the margin on smaller screens */
+  }
+}
+
+.navbar-toggler-icon {
+  background-color: #00ff00;
+}
+
+
+/* Style the container */
+.container {
+  background-color: #111;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
+
+
+}
+
+/* Style the main headings */
+h1,
+h2 {
+  color: #00ff00;
+}
+
+/* Style the real-time dashboard section */
+#zap_scans,
+#port_scans,
+#file_scans {
+  color: #00ff00;
+  font-size: 24px;
+}
+
+/* Style links */
+a {
+  color: #00ff00;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Style navbar links on hover */
+.navbar-nav .nav-item .nav-link:hover {
+  background-color: rgb(41, 63, 41);
+  /* Slightly brighter green on hover */
+}
+
+.navbar-nav .nav-item.active .nav-link {
+  background-color: rgb(41, 63, 41);
+}
+
+/* Customize the scrollbar's track */
+::-webkit-scrollbar {
+  width: 5px;
+  /* Width of the scrollbar */
+}
+
+/* Customize the scrollbar's thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  /* Color of the thumb */
+  border-radius: 6px;
+  /* Rounded corners for the thumb */
+}
+
+/* Customize the scrollbar's track when hovering over it */
+::-webkit-scrollbar-thumb:hover {
+
+  background-color: #00ff00;
+}
+
+/* Customize the scrollbar's track */
+::-webkit-scrollbar-track {
+  background-color: #000000;
+  /* Color of the track */
+}
+
+/* Customize the scrollbar's corner (between vertical and horizontal scrollbars) */
+::-webkit-scrollbar-corner {
+  background-color: #df0707;
+}
+
+/* Input text box styles */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #383938;
+  border-radius: 4px;
+  background-color: #255527;
+  padding: 10px;
+  caret-color: #00ff00;
+  /* Set a maximum width of 90% of the viewport width */
+  max-width: 90vw;
+}
+
+/* Override default browser styles for focused input elements */
+input[type="text"]:focus {
+  outline: none; /* Remove the default focus outline */
+  background-color: #255527 !important;
+  border-color: #00ff00;
+  color: white;
+}
+
+/* Style the submit button */
+input[type="submit"] {
+  background-color: #255527; /* Background color */
+  color: #00ff00; /* Text color */
+  border: none; /* Remove the border */
+  padding: 10px 20px; /* Padding around the text */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Show a pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  margin-top: 10px;
+}
+
+/* Change button style on hover */
+input[type="submit"]:hover {
+  background-color: #00ff00; /* Change the background color on hover */
+  color: #255527; 
+}
+
+/* Style the submit button */
+#scan-button {
+  background-color: #255527; /* Background color */
+  color: #00ff00; /* Text color */
+  border: none; /* Remove the border */
+  padding: 10px 20px; /* Padding around the text */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Show a pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  margin-top: 10px;
+}
+
+/* Change button style on hover */
+#scan-button:hover {
+  background-color: #00ff00; /* Change the background color on hover */
+  color: #255527; 
+}
+
+/* Style the label containing the file input */
+.custom-file-upload {
+  background-color: #255527;
+  color: #00ff00;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block;
+  overflow: hidden; /* Hide any overflow text */
+}
+
+/* Change button style on hover */
+.custom-file-upload:hover {
+  background-color: #00ff00;
+  color: #255527;
+}
+
+#scan-box-container{
+  justify-content: space-between;
+}
+
+
+.scan-box{
+  justify-content: center;
+  background-color: transparent;
+  border: 2px solid #00ff00;
+  box-shadow: inset 0px 0px 4px 4px #00ff00;
+  border-radius: 8px;
+  padding: 15px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+  width: 20vw;
+  
+}
+
+.scan-box:hover{
+  background-color: #255527;
+}
+
+
+#file_scans{
+  font-size: 10vw;
+}
+#port_scans{
+  font-size: 10vw;
+}
+#zap_scans{
+  font-size: 10vw;
+}
+
+

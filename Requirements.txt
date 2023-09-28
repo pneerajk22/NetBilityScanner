@@ -1,0 +1,13 @@
+java jdk latest
+zap scanner
+python >=3.11
+vs code
+Django library
+python-nmap lib
+nmap installed on windows
+daphe
+channels
+*****nmap scannings, image foensics, malware analysis with hashes*********
+*****$env:DJANGO_SETTINGS_MODULE = "NetBilityScanner.settings"********
+*********python manage.py makemigrations***********
+*********python manage.py migrate***********

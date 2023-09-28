@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Report</title>
+</head>
+<body>
+    <h1>Scan Report</h1>
+    <div>
+        {{ pie_chart_html|safe }}
+    </div>
+    <form method="GET" action="">
+        <label for="selected_date">Select Date:</label>
+        <input type="date" id="selected_date" name="selected_date">
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- Bar Chart -->
+    <div>
+        {{ bar_chart_html|safe }}
+    </div>
+</body>
+</html>
