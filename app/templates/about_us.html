@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% block title %} About Us - NetBility Scanner {%endblock %}
+{% block content %}
+  <div id="about_sec" class="section container text-center">
+    <h1>About Us</h1>
+    <p>
+      NetBility Scanner is an OpenSource Automation Platform for Multiple Recon
+      Steps. Our mission is to provide advanced tools and solutions for network
+      scanning, vulnerability assessment, and security testing, all while being
+      committed to open-source principles.
+    </p>
+  </div>
+
+  <div id="about_sec" class="section container text-center">
+    <h2>Why NetBility Scanner</h2>
+    <p>
+      Network reconnaissance and security testing are critical steps in
+      safeguarding your digital assets from cyber threats. However, these tasks
+      can be daunting, especially for those who are new to the field. NetBility
+      Scanner was born out of a desire to democratize security testing. Our
+      platform provides users with a user-friendly interface that automates many
+      aspects of the process, making it accessible to security professionals and
+      enthusiasts alike.
+    </p>
+  </div>
+
+  <!-- Add more sections as needed -->
+
+
+<script>
+  document.querySelector(".nav-item.active").classList.remove("active");
+  document.querySelector(".nav-item:nth-child(5)").classList.add("active");
+</script>
+
+{% endblock %}

@@ -30,7 +30,7 @@ body {
 /* Style for the full-screen container */
 #welcome-container,
 #total-scans-section,
-#footer-section {
+#footer-section{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -51,6 +51,10 @@ body {
     animation: fade-slide-up 1s ease;
     opacity: 1;
     transform: translateY(0);
+}
+
+#about_sec{
+  margin: 5vh;
 }
 
 /* Keyframes for the animation */
@@ -300,5 +304,7 @@ input[type="submit"]:hover {
 #zap_scans{
   font-size: 10vw;
 }
+
+
 
 

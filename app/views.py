@@ -18,6 +18,9 @@ VIRUS_TOTAL_API_KEY = '2646f29686a4d9304a92079d2db94e1214f1d8b9fc8aff9bb9a4d03f5
 def index(request):
     return render(request, 'index.html')
 
+def about_us(request):
+    return render(request, 'about_us.html')
+
 
 def get_initial_dashboard_data(request):
     # Retrieve initial data from your database or any other source

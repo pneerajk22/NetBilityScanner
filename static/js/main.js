@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var totalScansSection = document.getElementById("total-scans-section");
     var welcomeContainer = document.getElementById("welcome-container");
     var footerSection = document.getElementById("footer-section");
+    var scans_data = {};
 
     function handleIntersect(entries, observer) {
         entries.forEach(function (entry) {
@@ -43,46 +44,54 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("/get_initial_data/")
         .then((response) => response.json())
         .then((data) => {
-            updateScanCounts(data);
+            scans_data = data;
         })
         .catch((error) => {
             console.error("Error fetching initial data:", error);
         });
 
-    function updateScanCounts(data) {
-        const zapScansElement = document.getElementById("zap_scans");
-        const portScansElement = document.getElementById("port_scans");
-        const fileScansElement = document.getElementById("file_scans");
+    function animateNumbers() {
+        var zapScansElement = document.getElementById("zap_scans");
+        var portScansElement = document.getElementById("port_scans");
+        var fileScansElement = document.getElementById("file_scans");
 
-        let zapCount = 0;
-        let portCount = 0;
-        let fileCount = 0;
+        if (zapScansElement && portScansElement && fileScansElement) {
+            // Provide the initial count for each scan type here
+            var data = {
+                zap_scans: scans_data.zap_scans, // Example initial count
+                port_scans: scans_data.port_scans, // Example initial count
+                file_scans: scans_data.file_scans, // Example initial count
+            };
 
-        // Animate the numbers to their respective values
-        const interval = setInterval(() => {
-            zapScansElement.textContent = zapCount;
-            portScansElement.textContent = portCount;
-            fileScansElement.textContent = fileCount;
+            var interval = 10; // Interval in milliseconds
+            var duration = 500; // Animation duration in milliseconds
 
-            // Increment the counts until they reach their respective values
-            if (zapCount < data.zap_scans) {
-                zapCount++;
-            }
-            if (portCount < data.port_scans) {
-                portCount++;
-            }
-            if (fileCount < data.file_scans) {
-                fileCount++;
-            }
-
-            // Stop the animation when all counts reach their respective values
-            if (
-                zapCount === data.zap_scans &&
-                portCount === data.port_scans &&
-                fileCount === data.file_scans
-            ) {
-                clearInterval(interval);
-            }
-        }, 100); // Adjust the animation speed as needed
+            animate(zapScansElement, data.zap_scans,  interval, duration);
+            animate(portScansElement, data.port_scans, interval, duration);
+            animate(fileScansElement, data.file_scans, interval, duration);
+        } else {
+            console.error("One or more elements not found in the DOM.");
+        }
     }
+    function animate(element, targetValue, interval, duration) {
+        var startValue = 0;
+        var startTime = null;
+
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = timestamp - startTime;
+
+            if (progress < duration) {
+                var increment = (targetValue - startValue) * (progress / duration);
+                element.textContent = Math.floor(startValue + increment);
+                requestAnimationFrame(step);
+            } else {
+                element.textContent = targetValue;
+            }
+        }
+
+        requestAnimationFrame(step);
+    }
+
+
 });
